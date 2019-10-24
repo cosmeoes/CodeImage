@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mi primer telcel</title>
+</head>
+
+<body>
+  <textarea cols="40" rows="10" id="code" type="text" placeholder="type code here..."></textarea></br>
+  <input type="num" id="textSize">
+  <input type="num" id="width">
+  <input type="num" id="height">
+  <input type="color" id="backgroundColor">
+  <select name="" id="languaje">
+    <option value="javascript">javascript</option>
+    <option value="python">python</option>
+  </select>
+  <select name="" id="style">
+    <option value="monokai">monokai</option>
+    <option value="colorful">colorful</option>
+    <option value='default'>'default'</option>
+    <option value='emacs'>'emacs'</option>
+    <option value='friendly'>'friendly'</option>
+    <option value='colorful'>'colorful'</option>
+    <option value='autumn'>'autumn'</option>
+    <option value='murphy'>'murphy'</option>
+    <option value='manni'>'manni'</option>
+    <option value='monokai'>'monokai'</option>
+    <option value='perldoc'>'perldoc'</option>
+    <option value='pastie'>'pastie'</option>
+    <option value='borland'>'borland'</option>
+    <option value='trac'>'trac'</option>
+    <option value='native'>'native'</option>
+    <option value='fruity'>'fruity'</option>
+    <option value='bw'>'bw'</option>
+    <option value='vim'>'vim'</option>
+    <option value='vs'>'vs'</option>
+    <option value='tango'>'tango'</option>
+    <option value='rrt'>'rrt'</option>
+    <option value='xcode'>'xcode'</option>
+    <option value='igor'>'igor'</option>
+    <option value='paraiso-light'>'paraiso-light'</option>
+    <option value='paraiso-dark'>'paraiso-dark'</option>
+    <option value='lovelace'>'lovelace'</option>
+    <option value='algol'>'algol'</option>
+    <option value='algol_nu'>'algol_nu'</option>
+    <option value='arduino'>'arduino'</option>
+    <option value='rainbow_dash'>'rainbow_dash'</option>
+    <option value='abap'>'abap'</option>
+    <option value='solarized-dark'>'solarized-dark'</option>
+    <option value='solarized-light'>'solarized-light'</option>
+    <option value='sas'>'sas'</option>
+    <option value='stata'>'stata'</option>
+    <option value='stata-light'>'stata-light'</option>
+    <option value='stata-dark'>'stata-dark'</option>
+  </select>
+  <button id="send">Create image</button>
+  </br>
+  <img src="" alt="change values above" id="img">
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script>
+  function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+  document.getElementById("send").addEventListener('click', (e) => {
+    let text = document.getElementById("code").value;
+    let textSize = document.getElementById("textSize").value;
+    let width = document.getElementById("width").value;
+    let height = document.getElementById("height").value;
+    let languaje = document.getElementById("languaje").value;
+    let style = document.getElementById("style").value;
+    let backgroundColor = document.getElementById("backgroundColor").value;
+    axios.post("http://localhost:5000/image", {
+      text: text,
+      text_size: textSize,
+      width: width,
+      height: height,
+      languaje: languaje,
+      style: style,
+      background_color: hexToRgb(backgroundColor),
+    }).then((respose) => {
+      document.getElementById("img").src = "file:///home/cosme/codeImages/lol.jpg?" + new Date().getTime();
+    })
+  })
+</script>
+
+</html>
